@@ -37,7 +37,7 @@ Adding the `-p-` option will scan all ports on a host rather than just the 1000 
 
 Once hosts to target have been identified, we can use more detailed scans to identify services and operating system with
 
-`nmap -sV -v -O {ip address}`
+`nmap -sV -v -O -p- {ip address}`
 
 This will attempt to enumerate the services and operating system that are running on the host.
 
@@ -46,6 +46,36 @@ This will attempt to enumerate the services and operating system that are runnin
 # SMB shares
 
 </a>
+
+## Tools
+
+- smbclient
+- enum4linux
+- smbmap
+
+## Enumerating available shares and accessing public files with smbclient
+
+We can use smbclient to list the shares that are available on a host with
+
+`smbclient -L host -N`
+
+If a public share is found then we can access it with
+
+`smbclient \\\\hostip\\sharename`
+
+This will give us an interactive SMB shell that we can then use to browse the share and `get` files.
+
+`get file -` will output the contents to stdout rather than transferring the file if we want to have behaviour more like `cat`.
+
+## Further enumeration with enum4linux
+
+enum4linux can potentially give us much more information such as users and can also use null sessions to gain further access. Null sessions are disabled by default on recent implementations but may still be configured on legacy systems.
+
+`enum4linux host`
+
+We can also brute force share names to check for non-discoverable public shares with
+
+`enum4linux -s sharenameFile host`
 
 <a name='ftp'>
 
