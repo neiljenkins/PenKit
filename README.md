@@ -10,6 +10,7 @@ An outline of the process for beginning a penetration test, identifying the atta
 4. [Database services](#db)
 5. [Web servers](#web)
 6. [RDP services](#rdp)
+7. [Nmap scripts](#nse)
 
 <a name='hosts'>
 
@@ -83,6 +84,10 @@ We can also brute force share names to check for non-discoverable public shares 
 
 </a>
 
+## Anonymous shares
+
+If an FTP share has been set up to allow anonymous access then we can log in using the usename 'anonymous'.
+
 <a name='db'>
 
 # SQL and NoSQL database services
@@ -95,8 +100,30 @@ We can also brute force share names to check for non-discoverable public shares 
 
 </a>
 
+
+
 <a name ='rdp'>
 
 # RDP services
 
 </a>
+
+<a name ='nse'>
+
+# Nmap scripts
+
+</a>
+
+## SMB
+
+`--script='smb-enum-shares` - Attempts to get information about the shares on the target
+
+`--script='smb-brute` - Allows for brute forcing of SMB credentials, storing the credetials for use by other SMB scripts that are run at the same time
+
+## FTP
+
+`--script='ftp-brute` - Allows for brute forcing of FTP credentials
+
+## SSH
+
+`--script='ssh-brute` - Allows for brute forcing of ssh credentials
