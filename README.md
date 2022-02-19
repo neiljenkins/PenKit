@@ -9,8 +9,13 @@ An outline of the process for beginning a penetration test, identifying the atta
 3. [FTP shares](#ftp)
 4. [Database services](#db)
 5. [Web servers](#web)
+    - [Directory mapping](#dir)
+    - [Burp basics](#burp)
+    - [Fuzzing](#fuzz)
 6. [RDP services](#rdp)
 7. [Nmap scripts](#nse)
+8. [Wireless](#wireless)
+9. [Hash cracking](#hashes)
 
 <a name='hosts'>
 
@@ -100,6 +105,23 @@ If an FTP share has been set up to allow anonymous access then we can log in usi
 
 </a>
 
+<a name='#dir'>
+
+## Directory mapping
+
+</a>
+
+<a name='#burp'>
+
+## Burpsuite basics
+
+</a>
+
+<a name='#fuzz'>
+
+## Fuzzing
+
+</a>
 
 
 <a name ='rdp'>
@@ -114,16 +136,54 @@ If an FTP share has been set up to allow anonymous access then we can log in usi
 
 </a>
 
+<a name='nmap-smb'>
+
 ## SMB
+
+</a>
 
 `--script='smb-enum-shares` - Attempts to get information about the shares on the target
 
 `--script='smb-brute` - Allows for brute forcing of SMB credentials, storing the credetials for use by other SMB scripts that are run at the same time
 
+<a name='nmap-ftp'>
+
 ## FTP
+
+</a>
 
 `--script='ftp-brute` - Allows for brute forcing of FTP credentials
 
+<a name='nmap-ssh'>
+
 ## SSH
 
+</a>
+
 `--script='ssh-brute` - Allows for brute forcing of ssh credentials
+
+<a name='wireless'>
+
+# Wireless
+
+</a>
+
+## Network identification and packet capture
+
+In order to capture network traffic, need a network card that can operate in monitor or promiscuous mode. This allows for the capture of packets that are being broadcast and aren't addressed to the attacking machine.
+
+In order to enable monitor mode, can use:
+
+`airmon-ng check kill` to check for processes that may interfere with putting the adapter into monitor mode.
+
+`airmon start wlan0` will put the wireless card on interface wlan0 into monitor mode.
+
+`airmon stop wlan0` will return the adapter on interface wlan0 to managed mode for connecting to an access point.
+
+Once the adapter is in monitor mode, then we can use Wireshark to capture packets on the interface.
+
+<a name='hashes'>
+
+# Hash cracking
+
+</a>
