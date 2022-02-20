@@ -128,7 +128,7 @@ After gaining access to a SQL instance it is possible to execute commands using 
 
 gobuster can be used in directory enumeration mode to scan for possible directories. This doesn't work recursively.
 
-`gobuster dir -u {target} -w {path to wordlist} -x {extensions to check for, e.g. js,html,php,txt} -o {filename to outpu}`
+`gobuster dir -u {target} -w {path to wordlist} -x {extensions to check for, e.g. js,html,php,txt} -o {filename to output}`
 
 ### Dirbuster
 
