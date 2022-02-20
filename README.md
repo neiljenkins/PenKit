@@ -124,6 +124,18 @@ After gaining access to a SQL instance it is possible to execute commands using 
 
 </a>
 
+### Gobuster
+
+gobuster can be used in directory enumeration mode to scan for possible directories. This doesn't work recursively.
+
+`gobuster dir -u {target} -w {path to wordlist} -x {extensions to check for, e.g. js,html,php,txt} -o {filename to outpu}`
+
+### Dirbuster
+
+Dirbuster is an alternative to gobuster that can be set to automatically scan recursively.
+
+Dirbuster comes with a GUI for configuring scan parameters.
+
 <a name='#burp'>
 
 ## Burpsuite basics
