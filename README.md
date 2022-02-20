@@ -182,8 +182,27 @@ In order to enable monitor mode, can use:
 
 Once the adapter is in monitor mode, then we can use Wireshark to capture packets on the interface.
 
+
+## Cracking passwords
+
+If we can capture a handshake on a network, then it is possible to use tools such as Hashcat to launch a dictionary or brute force attack to determine the password for the network.
+
+Hashcat is a good tool for this as it is optimized for usage on a GPU and can give faster times to crack passwords.
+
 <a name='hashes'>
 
 # Hash cracking
 
 </a>
+
+## Hash identification
+
+Before attempting to crack a hash, it is important to identify the type of hash. While tools such as John the Ripper can attempt to identify the hash type being given, there may well be multiple candidates and it is far more efficient if we can tell John or Hashcat the type of hasing algorithm that we're cracking.
+
+There are some useful online tools for hash identification, such as:
+
+[Hash type identifier](https://hashes.com/en/tools/hash_identifier)
+
+## John the ripper
+
+## Hashcat
