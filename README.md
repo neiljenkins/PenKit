@@ -148,6 +148,16 @@ Dirbuster comes with a GUI for configuring scan parameters.
 
 </a>
 
+### Ffuf
+
+Can use ffuf to fuzz parameters or directories
+
+### Hydra
+
+Hydra can be used to brute force over a number of protocols including ssh, http[s]-{post|get}-form and others.
+
+Example - Brute forcing a http post form login:
+`hydra -P sorted.dic -l "Elliot" 10.10.3.188 http-post-form "/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log+In&redirect_to=http%3A%2F%2F10.10.3.188%2Fwp-admin%2F&testcookie=1:S=Location"`
 
 <a name ='rdp'>
 
