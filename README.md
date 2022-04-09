@@ -9,8 +9,13 @@ An outline of the process for beginning a penetration test, identifying the atta
 3. [FTP shares](#ftp)
 4. [Database services](#db)
 5. [Web servers](#web)
+    - [Directory mapping](#dir)
+    - [Burp basics](#burp)
+    - [Fuzzing](#fuzz)
 6. [RDP services](#rdp)
 7. [Nmap scripts](#nse)
+8. [Wireless](#wireless)
+9. [Hash cracking](#hashes)
 
 <a name='hosts'>
 
@@ -94,6 +99,19 @@ If an FTP share has been set up to allow anonymous access then we can log in usi
 
 </a>
 
+## Code execution on SQL server
+
+After gaining access to a SQL instance it is possible to execute commands using `xp_cmdshell`. This command is often disabled, but if we have appropriate privileges then it can be enabled by following the sequence below.
+
+-- this turns on advanced options and is needed to configure xp_cmdshell
+`EXEC sp_configure 'show advanced options', '1'`
+`RECONFIGURE`
+-- this enables xp_cmdshell
+`EXEC sp_configure 'xp_cmdshell', '1' `
+`RECONFIGURE`
+
+`xp_cmdshell` can then be used to execute code, for example to use powershell to fetch a script onto the target.
+
 <a name='web'>
 
 # Web servers
@@ -107,7 +125,46 @@ If an FTP share has been set up to allow anonymous access then we can log in usi
 For PHP sites, if parameters aren't properly handled, may be able to use syntax such as ${system(cmd)} to act essentially as a web shell.
 
 Other technologies may use parameters to populate a template. These templates may be exploitable but the specifics will require learning the technology being used.
+<a name='#dir'>
 
+## Directory mapping
+
+</a>
+
+### Gobuster
+
+gobuster can be used in directory enumeration mode to scan for possible directories. This doesn't work recursively.
+
+`gobuster dir -u {target} -w {path to wordlist} -x {extensions to check for, e.g. js,html,php,txt} -o {filename to output}`
+
+### Dirbuster
+
+Dirbuster is an alternative to gobuster that can be set to automatically scan recursively.
+
+Dirbuster comes with a GUI for configuring scan parameters.
+
+<a name='#burp'>
+
+## Burpsuite basics
+
+</a>
+
+<a name='#fuzz'>
+
+## Fuzzing
+
+</a>
+
+### Ffuf
+
+Can use ffuf to fuzz parameters or directories
+
+### Hydra
+
+Hydra can be used to brute force over a number of protocols including ssh, http[s]-{post|get}-form and others.
+
+Example - Brute forcing a http post form login:
+`hydra -P sorted.dic -l "Elliot" 10.10.3.188 http-post-form "/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log+In&redirect_to=http%3A%2F%2F10.10.3.188%2Fwp-admin%2F&testcookie=1:S=Location"`
 
 <a name ='rdp'>
 
@@ -121,16 +178,73 @@ Other technologies may use parameters to populate a template. These templates ma
 
 </a>
 
+<a name='nmap-smb'>
+
 ## SMB
+
+</a>
 
 `--script='smb-enum-shares` - Attempts to get information about the shares on the target
 
 `--script='smb-brute` - Allows for brute forcing of SMB credentials, storing the credetials for use by other SMB scripts that are run at the same time
 
+<a name='nmap-ftp'>
+
 ## FTP
+
+</a>
 
 `--script='ftp-brute` - Allows for brute forcing of FTP credentials
 
+<a name='nmap-ssh'>
+
 ## SSH
 
+</a>
+
 `--script='ssh-brute` - Allows for brute forcing of ssh credentials
+
+<a name='wireless'>
+
+# Wireless
+
+</a>
+
+## Network identification and packet capture
+
+In order to capture network traffic, need a network card that can operate in monitor or promiscuous mode. This allows for the capture of packets that are being broadcast and aren't addressed to the attacking machine.
+
+In order to enable monitor mode, can use:
+
+`airmon-ng check kill` to check for processes that may interfere with putting the adapter into monitor mode.
+
+`airmon start wlan0` will put the wireless card on interface wlan0 into monitor mode.
+
+`airmon stop wlan0` will return the adapter on interface wlan0 to managed mode for connecting to an access point.
+
+Once the adapter is in monitor mode, then we can use Wireshark to capture packets on the interface.
+
+
+## Cracking passwords
+
+If we can capture a handshake on a network, then it is possible to use tools such as Hashcat to launch a dictionary or brute force attack to determine the password for the network.
+
+Hashcat is a good tool for this as it is optimized for usage on a GPU and can give faster times to crack passwords.
+
+<a name='hashes'>
+
+# Hash cracking
+
+</a>
+
+## Hash identification
+
+Before attempting to crack a hash, it is important to identify the type of hash. While tools such as John the Ripper can attempt to identify the hash type being given, there may well be multiple candidates and it is far more efficient if we can tell John or Hashcat the type of hasing algorithm that we're cracking.
+
+There are some useful online tools for hash identification, such as:
+
+[Hash type identifier](https://hashes.com/en/tools/hash_identifier)
+
+## John the ripper
+
+## Hashcat
