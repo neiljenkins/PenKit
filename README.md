@@ -100,6 +100,13 @@ If an FTP share has been set up to allow anonymous access then we can log in usi
 
 </a>
 
+## Injections
+
+### URL parameter injections
+
+For PHP sites, if parameters aren't properly handled, may be able to use syntax such as ${system(cmd)} to act essentially as a web shell.
+
+Other technologies may use parameters to populate a template. These templates may be exploitable but the specifics will require learning the technology being used.
 
 
 <a name ='rdp'>
