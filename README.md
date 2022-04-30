@@ -4,18 +4,79 @@ An outline of the process for beginning a penetration test, identifying the atta
 
 ## Contents
 
-1. [Host discovery and enumaration](#hosts)
-2. [SMB shares](#smb)
-3. [FTP shares](#ftp)
-4. [Database services](#db)
-5. [Web servers](#web)
+1. [Pen Test Checklist](#checklist)
+2. [Host discovery and enumaration](#hosts)
+3. [SMB shares](#smb)
+4. [FTP shares](#ftp)
+5. [Database services](#db)
+6. [Web servers](#web)
     - [Directory mapping](#dir)
     - [Burp basics](#burp)
     - [Fuzzing](#fuzz)
-6. [RDP services](#rdp)
-7. [Nmap scripts](#nse)
-8. [Wireless](#wireless)
-9. [Hash cracking](#hashes)
+7. [RDP services](#rdp)
+8. [Nmap scripts](#nse)
+9. [Wireless](#wireless)
+10. [Hash cracking](#hashes)
+
+<a name='checklist'>
+
+# Pen Test Checklist
+
+Remember - Try and have scans / enumerations running in the background.
+Run tools like nmap in verbose mode so that early results can give somewhere to start even if the scans take a long time to complete.
+
+## Passive Recon
+
+Not really relevant to the exam
+
+## Active Recon
+
+### Host discovery
+
+* Run scan to identify hosts that appear to be "up"
+* Do hosts respond to Ping requests?
+* What port based discoveries work?
+
+### Service Enumeration
+
+* Check ALL ports
+* Get the OS
+  * Does the OS indicate what type of host this might be?
+* Note all version numbers
+* Are any services running on non-standard ports?
+
+### Web scanning - mapping the surface area
+
+* Auto scanning tools
+  * Nikto
+  * ZAP
+* Identify  the underlying technology
+  * Check for standard management directories / interfaces
+* Directory enumeration
+  * Dirb
+  * Gobuster
+  * Be sure to go recursive to enumerate as much as possible
+* Pay particular attention to any pages with input / file uploads etc.
+
+## Identifying vulnerabilities
+
+* Search exploit-db etc for service versions
+* Automatically and manually go through any web apps
+* Search Metasploit
+
+## Exploiting vulnerabilities
+
+* RCE is ideal, but any extra information may help with progress elsewhere
+* Always be mindful of opportunities to chain exploits
+* May also be able to use info from one area / host to exploit another.
+
+## Post exploitation
+
+* Can we achieve privilege exploitation
+* See if any new networks or hosts are now available
+* Loop through the steps until confident all vulnerabilities have been exploited or confirmed safe or time is up.
+
+</a>
 
 <a name='hosts'>
 
