@@ -179,6 +179,13 @@ After gaining access to a SQL instance it is possible to execute commands using 
 
 </a>
 
+## Injections
+
+### URL parameter injections
+
+For PHP sites, if parameters aren't properly handled, may be able to use syntax such as ${system(cmd)} to act essentially as a web shell.
+
+Other technologies may use parameters to populate a template. These templates may be exploitable but the specifics will require learning the technology being used.
 <a name='#dir'>
 
 ## Directory mapping
